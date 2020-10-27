@@ -40,5 +40,11 @@ jobs:
           check_name: Unit Test Results
           files: test-report.xml
           report_individual_runs: true
+      - name: Publish code coverage report
+        uses: 5monkeys/cobertura-action@master
+        with:
+          path: "**/cobertura-coverage.xml"
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          minimum_coverage: 25
       - name: build the project
         run: npm run build --if-present
