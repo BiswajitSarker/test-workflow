@@ -48,6 +48,8 @@ jobs:
           path: "**/cobertura-coverage.xml"
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           minimum_coverage: 25
+      - name: Run Tests
+        run: npm run test:sonar
       - name: Run Sonacloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         # with:
