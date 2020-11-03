@@ -51,7 +51,9 @@ jobs:
       - name: Install jest Sonar reporter
         run: npm install -D jest-sonar-reporter
       - name: Run Sonar Test Coverage
-        run: npm run test:sonar
+        run: |
+          npm run test:sonar
+          sed -i 's+/home/runner/work/jobreporter/jobreporter+/github/workspace+g' /coverage/lcov.info
       - name: Run Sonacloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         # with:
