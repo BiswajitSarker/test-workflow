@@ -16,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --verbose",
     "test:ci": "react-scripts test --env=jsdom  --ci --watchAll=false --testResultsProcessor ./node_modules/jest-junit-reporter --coverage --coverageReporters=cobertura",
-    "test:sonar": "react-scripts test --env=jsdom  --ci --watchAll=false --testResultsProcessor ./node_modules/jestSonarReporter --coverage",
+    "test:sonar": "react-scripts test --env=jsdom  --ci --watchAll=false --testResultsProcessor ./node_modules/jest-sonar-reporter --coverage",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
