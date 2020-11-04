@@ -31,10 +31,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Clean install node modules
         run: npm ci
-      - name: Install jest junit reporter
-        run: npm install -D jest-junit-reporter
 
       # Use the folowing steps to run tests and code coverage without sonarcloud
+      # - name: Install jest junit reporter
+      #   run: npm install -D jest-junit-reporter
       # - name: Run unit tests
       #   run: npm run test:ci
       # - name: Publish Unit Test Results
