@@ -54,6 +54,7 @@ jobs:
         run: |
           npm run test:sonar
           sed -i 's+/home/runner/work/test-workflow/test-workflow+/github/workspace+g' ./coverage/lcov.info
+          sed -i 's+/home/runner/work/test-workflow/test-workflow+/github/workspace+g' ./testResults/sonar-report.xml
           more ./coverage/lcov.info
       - name: Run Sonacloud Scan
         uses: sonarsource/sonarcloud-github-action@master
