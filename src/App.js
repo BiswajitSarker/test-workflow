@@ -10,7 +10,9 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Bish Test-App</h1>
+          <h1 className="App-title">
+            Bish Test-App running version {process.env.REACT_APP_VERSION}
+          </h1>
         </header>
         <div className="Test-container">
           <CommentBox />

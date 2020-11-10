@@ -105,7 +105,8 @@ exports.config = {
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
   // baseUrl: "http://localhost:3000",
-  baseUrl: "https://bish-test-app-test.azurewebsites.net/",
+  baseUrl:
+    "http://ec2co-ecsel-14ybj928chjq8-1273984701.us-east-2.elb.amazonaws.com/",
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
