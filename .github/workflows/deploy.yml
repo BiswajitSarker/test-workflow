@@ -90,4 +90,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Push latest image to ECR
-        run: docker push ${{ secrets.AWS_ECR_IMAGE }}:$(echo $IMAGE_TAG)
+        run: |
+          echo $IMAGE_TAG
+          docker push ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG
