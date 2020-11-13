@@ -85,6 +85,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build the docker image with Nginx
+        id: build-image
         run: |
           IMAGE_TAG=build-$(echo $GITHUB_RUN_ID)
           docker build -t ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG .
@@ -93,3 +94,23 @@ jobs:
         run: |
           IMAGE_TAG=build-$(echo $GITHUB_RUN_ID)
           docker push ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition production-test-app-task-definition --query taskDefinition > task-definition.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: production-test-app
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: production-test-app-service
+          cluster: production-test-app-cluster
+          wait-for-service-stability: true
