@@ -72,14 +72,7 @@ jobs:
       - name: build the project
         run: npm run build --if-present
 
-      - name: Build the docker image with Nginx
-        run: |
-          # IMAGE_TAG=build-$(echo $GITHUB_RUN_ID | awk -F":" '{print $2}')
-          IMAGE_TAG=build-$(echo $GITHUB_RUN_ID)
-          docker build -t ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG .
-          echo $IMAGE_TAG
-          docker push ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG
-
+      # Get login info from AWS
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -91,7 +84,10 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Push latest image to ECR
+      - name: Build the docker image with Nginx
         run: |
-          echo $IMAGE_TAG
-          docker push ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG
+          IMAGE_TAG=build-$(echo $GITHUB_RUN_ID)
+          docker build -t ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG .
+
+      - name: Push the image into AWS ECR
+        run: docker push ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG
