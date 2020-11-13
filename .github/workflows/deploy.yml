@@ -89,11 +89,13 @@ jobs:
         run: |
           IMAGE_TAG=build-$(echo $GITHUB_RUN_ID)
           docker build -t ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG .
-
-      - name: Push the image into AWS ECR
-        run: |
-          IMAGE_TAG=build-$(echo $GITHUB_RUN_ID)
           docker push ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG
+          echo "::set-output name=image::${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG"
+
+      # - name: Push the image into AWS ECR
+      #   run: |
+      #     IMAGE_TAG=build-$(echo $GITHUB_RUN_ID)
+      #     docker push ${{ secrets.AWS_ECR_IMAGE }}:$IMAGE_TAG
 
       - name: Download task definition
         run: |
